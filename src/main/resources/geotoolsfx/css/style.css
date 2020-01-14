@@ -1,0 +1,38 @@
+.map-graphic-button-icon {
+	-size: 30;
+	-fx-min-width: -size;
+	-fx-min-height: -size;
+	-fx-max-width: -size;
+	-fx-max-height: -size;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+}
+
+.map-graphic-full-extent-icon {
+	-fx-background-image: url("/org/geotools/swing/icons/mActionZoomFullExtent.png");
+}
+
+.map-graphic-zoom-in-icon {
+	-fx-background-image: url("/org/geotools/swing/icons/mActionZoomIn.png");
+}
+
+.map-graphic-zoom-out-icon {
+	-fx-background-image: url("/org/geotools/swing/icons/mActionZoomOut.png");
+}
+
+.map-graphic-pan-icon {
+	-fx-background-image: url("/org/geotools/swing/icons/mActionPan.png");
+}
+
+.map-graphic-delete-icon {
+	-fx-background-image: url("/org/geotools/swing/icons/cross.png");
+}
+
+.map-graphic-zoom-in-rectangle {
+	-fx-stroke-width: 1; 
+	-fx-stroke: #000000;
+}
+
+.list-item-selector-index-text-field {
+	-fx-pref-width: 70;
+}

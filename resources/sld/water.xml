@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><sld:StyledLayerDescriptor xmlns="http://www.opengis.net/sld" xmlns:sld="http://www.opengis.net/sld" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" version="1.0.0">
+  <sld:UserLayer>
+    <sld:LayerFeatureConstraints>
+      <sld:FeatureTypeConstraint/>
+    </sld:LayerFeatureConstraints>
+    <sld:UserStyle>
+      <sld:Name>Water</sld:Name>
+      <sld:FeatureTypeStyle>
+        <sld:Name>Default</sld:Name>
+        <sld:Rule>
+          <sld:Name>Default</sld:Name>
+          <ogc:Filter>
+            <ogc:Or>
+              <ogc:PropertyIsEqualTo>
+                <ogc:Function name="geometryType">
+                  <ogc:PropertyName>the_geom</ogc:PropertyName>
+                </ogc:Function>
+                <ogc:Literal>Polygon</ogc:Literal>
+              </ogc:PropertyIsEqualTo>
+              <ogc:PropertyIsEqualTo>
+                <ogc:Function name="geometryType">
+                  <ogc:PropertyName>the_geom</ogc:PropertyName>
+                </ogc:Function>
+                <ogc:Literal>MultiPolygon</ogc:Literal>
+              </ogc:PropertyIsEqualTo>
+            </ogc:Or>
+          </ogc:Filter>
+          <sld:PolygonSymbolizer>
+            <sld:Fill>
+              <sld:CssParameter name="fill">#CCFFFF</sld:CssParameter>
+            </sld:Fill>
+            <sld:Stroke/>
+          </sld:PolygonSymbolizer>
+        </sld:Rule>
+      </sld:FeatureTypeStyle>
+    </sld:UserStyle>
+  </sld:UserLayer>
+</sld:StyledLayerDescriptor>
+

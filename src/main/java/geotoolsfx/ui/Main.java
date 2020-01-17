@@ -3,6 +3,7 @@ package geotoolsfx.ui;
 import java.io.IOException;
 
 import dock.DockManager;
+import dock.DockPane;
 import geotoolsfx.Config;
 import geotoolsfx.ui.controller.MainController;
 import javafx.application.Application;
@@ -16,12 +17,13 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws IOException {
-//		DockFX.getInstance().forceFloatingOnLoad(true);
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("geotoolsfx/fxml/Main.fxml"));
-		fxmlLoader.load();
+		DockPane dockPane = fxmlLoader.load();
 		MainController mainController = fxmlLoader.getController();
 		mainController.addConfig("resources/config/geotoolsfx.xml");
-		DockManager.getInstance().setLayoutConfigFile("resources/config/dockfx/geotoolsfx.xml");
-		DockManager.getInstance().loadDockLayout();
+		DockManager dockManager = new DockManager();
+		dockManager.addDockPane(dockPane);
+		dockManager.setLayoutConfigFile("resources/config/dockfx/geotoolsfx.xml");
+		dockManager.loadDockLayout();
 	}
 }

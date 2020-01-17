@@ -3,8 +3,6 @@ package geotoolsfx.ui.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import dock.DockGroup;
-import dock.DockPane;
 import geotoolsfx.Config;
 import geotoolsfx.Configs;
 import geotoolsfx.DataStores;

@@ -3,10 +3,10 @@ package geotoolsfx.ui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 import org.geotools.map.MapContent;
 
-import dock.DockGroup;
 import dock.DockPane;
 import geotoolsfx.MapContents;
 import geotoolsfx.listener.MapContentsListener;
@@ -23,11 +23,12 @@ public class MapContentsController implements Initializable, MapContentsListener
 	@FXML
 	private TreeView<String> treeView;
 	
+	@FXML
+	private DockPane mapContentsDockPane;
+	
 	private MapContents mapContents;
 	
 	private Boolean ignoreMapContentsEvents = false;
-	
-	private DockGroup dockGroup;
 	
 	public static final String GRAPHIC_MAPCONTENT_PROPERTY = "mapContentsControllerMapContent";
 	
@@ -46,10 +47,6 @@ public class MapContentsController implements Initializable, MapContentsListener
 			}
 		});
 	}
-
-	public void setDockGroup(DockGroup dockGroup) {
-		this.dockGroup = dockGroup;
-	}
 	
 	public void setMapContents(MapContents mapContents) {
 		this.mapContents = mapContents;
@@ -59,7 +56,9 @@ public class MapContentsController implements Initializable, MapContentsListener
 		TreeItem<String> treeItem = treeView.getSelectionModel().getSelectedItem();
 		MapContent mapContent = getMapContentFromTreeItem(treeItem);
 		DockPane dockPane = getMapGraphicDockPane(mapContent);
-		dockPane.setDockGroup(dockGroup);
+		dockPane.setId(UUID.randomUUID().toString());
+		mapContentsDockPane.getDockPanes().add(dockPane);
+		mapContentsDockPane.getDockManager().addDockPane(dockPane);
 		dockPane.show();
 	}
 	

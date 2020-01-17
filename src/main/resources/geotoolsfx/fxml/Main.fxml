@@ -2,34 +2,32 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import dock.*?>
-<DockGroup fx:id="rootDockGroup" groupId="geotoolsfx" groupName="GeoTools" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="geotoolsfx.ui.controller.MainController">	
-	<DockPane fx:id="catalogDockPane" title="Catalog">
-		<content>
-			<fx:include VBox.vgrow="ALWAYS" fx:id="catalog" source="Catalog.fxml"/>
-		</content>
-	</DockPane>
-	
-	<DockPane fx:id="featureCollectionsDockPane" title="Feature Collections">
-		<content>
-			<fx:include VBox.vgrow="ALWAYS" fx:id="featureCollections" source="FeatureCollections.fxml"/>
-		</content>
-	</DockPane>
-	
-	<DockPane fx:id="mapContentsDockPane" title="Map Contents">
-		<content>
-			<fx:include VBox.vgrow="ALWAYS" fx:id="mapContents" source="MapContents.fxml"/>
-		</content>
-	</DockPane>
-	
-	<DockPane fx:id="layersDockPane" title="Layers">
-		<content>
-			<fx:include VBox.vgrow="ALWAYS" fx:id="layers" source="Layers.fxml"/>
-		</content>
-	</DockPane>
-	
-	<DockPane fx:id="stylesDockPane" title="Styles">
-		<content>
-			<fx:include VBox.vgrow="ALWAYS" fx:id="styles" source="Styles.fxml"/>
-		</content>
-	</DockPane>
-</DockGroup>
+<DockPane fx:id="rootDockGroup" title="GeoTools" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="geotoolsfx.ui.controller.MainController">	
+	<dockPanes>
+		<DockPane fx:id="catalogDockPane" title="Catalog">
+			<content>
+				<fx:include VBox.vgrow="ALWAYS" fx:id="catalog" source="Catalog.fxml"/>
+			</content>
+		</DockPane>
+		
+		<DockPane fx:id="featureCollectionsDockPane" title="Feature Collections">
+			<content>
+				<fx:include VBox.vgrow="ALWAYS" fx:id="featureCollections" source="FeatureCollections.fxml"/>
+			</content>
+		</DockPane>
+		
+		<fx:include VBox.vgrow="ALWAYS" fx:id="mapContents" source="MapContents.fxml"/>
+		
+		<DockPane fx:id="layersDockPane" title="Layers">
+			<content>
+				<fx:include VBox.vgrow="ALWAYS" fx:id="layers" source="Layers.fxml"/>
+			</content>
+		</DockPane>
+		
+		<DockPane fx:id="stylesDockPane" title="Styles">
+			<content>
+				<fx:include VBox.vgrow="ALWAYS" fx:id="styles" source="Styles.fxml"/>
+			</content>
+		</DockPane>
+	</dockPanes>
+</DockPane>

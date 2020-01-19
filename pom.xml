@@ -4,7 +4,7 @@
     http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>geotoolsfx</groupId>
-    <artifactId>GeoToolsFX</artifactId>
+    <artifactId>geotoolsfx</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-beta</version>
     <name>GeoToolsFX</name>
@@ -94,8 +94,8 @@
 		    <version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>dock</groupId>
-			<artifactId>DndDockFX</artifactId>
+			<groupId>dnddockfx</groupId>
+			<artifactId>dnddockfx</artifactId>
 			<version>0.0.1-beta</version>
 		</dependency>
     </dependencies>

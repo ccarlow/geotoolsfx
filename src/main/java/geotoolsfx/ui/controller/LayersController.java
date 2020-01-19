@@ -9,8 +9,7 @@ import org.geotools.map.MapContent;
 import org.geotools.map.MapLayerEvent;
 import org.geotools.map.MapLayerListEvent;
 import org.geotools.map.MapLayerListListener;
-
-import dock.DockPane;
+import dnddockfx.DockPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;

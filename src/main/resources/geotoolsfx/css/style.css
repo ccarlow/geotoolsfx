@@ -32,7 +32,3 @@
 	-fx-stroke-width: 1; 
 	-fx-stroke: #000000;
 }
-
-.list-item-selector-index-text-field {
-	-fx-pref-width: 70;
-}

@@ -7,8 +7,7 @@ import java.util.ResourceBundle;
 
 import org.geotools.styling.Style;
 import org.opengis.feature.Feature;
-
-import dock.DockPane;
+import dnddockfx.DockPane;
 import geotoolsfx.Config.FeatureCollection;
 import geotoolsfx.listener.FeatureCollectionsListener;
 import geotoolsfx.listener.StylesListener;

@@ -6,8 +6,7 @@ import java.util.ResourceBundle;
 import java.util.UUID;
 
 import org.geotools.map.MapContent;
-
-import dock.DockPane;
+import dnddockfx.DockPane;
 import geotoolsfx.MapContents;
 import geotoolsfx.listener.MapContentsListener;
 import javafx.collections.ListChangeListener;

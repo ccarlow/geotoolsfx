@@ -38,7 +38,7 @@ import javafx.util.Callback;
 
 public class FeatureCollectionController implements Initializable, FeatureCollectionListener {	
 	@FXML
-	private collectionitemselector.ui.controller.MainController collectionItemSelectorController;
+	private collectionitemselector.CollectionItemSelectorController collectionItemSelectorController;
 	
 	@FXML
 	private VBox tableContainer;

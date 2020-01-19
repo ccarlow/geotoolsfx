@@ -1,9 +1,8 @@
 package geotoolsfx.ui;
 
 import java.io.IOException;
-
-import dock.DockManager;
-import dock.DockPane;
+import dnddockfx.DockManager;
+import dnddockfx.DockPane;
 import geotoolsfx.Config;
 import geotoolsfx.ui.controller.MainController;
 import javafx.application.Application;

@@ -5,8 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.geotools.styling.Style;
-
-import dock.DockPane;
+import dnddockfx.DockPane;
 import geotoolsfx.StyleGroup;
 import geotoolsfx.listener.StyleGroupListener;
 import javafx.fxml.FXML;

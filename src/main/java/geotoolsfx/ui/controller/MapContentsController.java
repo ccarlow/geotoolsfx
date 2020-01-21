@@ -54,25 +54,27 @@ public class MapContentsController implements Initializable, MapContentsListener
 	public void openMapGraphic() {
 		TreeItem<String> treeItem = treeView.getSelectionModel().getSelectedItem();
 		MapContent mapContent = getMapContentFromTreeItem(treeItem);
-		DockPane dockPane = getMapGraphicDockPane(mapContent);
+		MapGraphicController mapGraphicController = getMapGraphicController(mapContent);
+		DockPane dockPane = mapGraphicController.getDockPane();
 		dockPane.setId(UUID.randomUUID().toString());
+		dockPane.setTitle(treeItem.getValue());
 		mapContentsDockPane.getDockPanes().add(dockPane);
 		mapContentsDockPane.getDockManager().addDockPane(dockPane);
 		dockPane.show();
 	}
 	
-	public static DockPane getMapGraphicDockPane(MapContent mapContent) {
-		DockPane dockPane = null;
+	public static MapGraphicController getMapGraphicController(MapContent mapContent) {
+		MapGraphicController mapGraphicController = null;
 		FXMLLoader fxmlLoader = new FXMLLoader(MapContentsController.class.getClassLoader().getResource("geotoolsfx/fxml/MapGraphic.fxml"));
 		try {
 			Node root = (Node)fxmlLoader.load();
-			MapGraphicController mapGraphicController = fxmlLoader.getController();
+			mapGraphicController = fxmlLoader.getController();
 			mapGraphicController.setMapContent(mapContent);
-			dockPane = new DockPane(mapContent.getTitle(), root);
+//			dockPane = new DockPane(mapContent.getTitle(), root);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return dockPane;
+		return mapGraphicController;
 	}
 	
 	private MapContent getMapContentFromTreeItem(TreeItem<String> treeItem) {

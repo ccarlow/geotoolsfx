@@ -20,6 +20,7 @@ import org.geotools.swing.tool.AbstractZoomTool;
 import org.jfree.fx.FXGraphics2D;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
+import dnddockfx.DockPane;
 import geotoolsfx.Config;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -40,9 +41,6 @@ import javafx.scene.shape.Rectangle;
 
 public class MapGraphicController implements Initializable, MapLayerListListener, MapBoundsListener {
 	@FXML
-	private TreeView<Config.MapContent> treeView;
-	
-	@FXML
 	private Rectangle zoomRectangle;
 	
 	@FXML
@@ -50,6 +48,9 @@ public class MapGraphicController implements Initializable, MapLayerListListener
 	
 	@FXML
 	private ImageView mapImageView;
+	
+	@FXML
+	private DockPane dockPane;
 	
 	private FXGraphics2D graphics;
 	private StreamingRenderer renderer;
@@ -79,6 +80,12 @@ public class MapGraphicController implements Initializable, MapLayerListListener
 				setMapGraphics();
 			}
 		});
+		
+		mapGraphic.setStyle("-fx-border-color:black");
+	}
+	
+	public DockPane getDockPane() {
+		return dockPane;
 	}
 	
 	public void setMapContent(MapContent mapContent) {
@@ -103,7 +110,7 @@ public class MapGraphicController implements Initializable, MapLayerListListener
 			renderer.paint(gr, paintArea, mapContent.getViewport().getBounds());
 
 			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-			BackgroundImage myBI= new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+			BackgroundImage myBI = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 			mapGraphic.setBackground(new Background(myBI));	
 		}
 	}

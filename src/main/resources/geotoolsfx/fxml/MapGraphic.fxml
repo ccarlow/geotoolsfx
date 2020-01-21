@@ -3,23 +3,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.image.ImageView?>
-<?import dock.*?>
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="/geotoolsfx/css/style.css"  fx:controller="geotoolsfx.ui.controller.MapGraphicController">	
-	 <AnchorPane VBox.vgrow="ALWAYS">
-    	<VBox AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="20.0">
-    		<HBox alignment="center" spacing="5">
-    			<Button onAction="#handleZoomInButton" styleClass="map-graphic-button-icon,map-graphic-zoom-in-icon"/>
-    			<Button onAction="#handleZoomOutButton" styleClass="map-graphic-button-icon,map-graphic-zoom-out-icon"/>
-    			<Button onAction="#handleFullExtentButton" styleClass="map-graphic-button-icon,map-graphic-full-extent-icon"/>
-    			<Button onAction="#handlePanButton" styleClass="map-graphic-button-icon,map-graphic-pan-icon"/>
-    		</HBox>
-    		<VBox fx:id="mapGraphic" VBox.vgrow="ALWAYS" onMousePressed="#mapGraphicMousePressed" onMouseReleased="#mapGraphicMouseReleased" onMouseDragged="#mapGraphicMouseDragged" onMouseClicked="#mapGraphicMouseClicked">
-    			<ImageView fx:id="mapImageView" visible="false" managed="false" />
-	            <Rectangle fx:id="zoomRectangle" visible="false" managed="false" fill="transparent" styleClass="map-graphic-zoom-in-rectangle"/>
-    			<Rectangle fx:id="areaOfInterestRectangle" visible="false" managed="false" fill="transparent" mouseTransparent="true"/>
-	        </VBox>
-    	</VBox>
-    </AnchorPane>
-    <Pane fx:id="labelPane" managed="false" mouseTransparent="true"/>
-    <Label fx:id="cursorCoordLabel"/>
-</VBox>
+<?import dnddockfx.*?>
+<DockPane fx:id="dockPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="/geotoolsfx/css/style.css"  fx:controller="geotoolsfx.ui.controller.MapGraphicController">
+	<content>
+		<VBox>	
+			 <AnchorPane VBox.vgrow="ALWAYS">
+		    	<VBox AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="20.0">
+		    		<HBox alignment="center" spacing="5">
+		    			<Button onAction="#handleZoomInButton" styleClass="map-graphic-button-icon,map-graphic-zoom-in-icon"/>
+		    			<Button onAction="#handleZoomOutButton" styleClass="map-graphic-button-icon,map-graphic-zoom-out-icon"/>
+		    			<Button onAction="#handleFullExtentButton" styleClass="map-graphic-button-icon,map-graphic-full-extent-icon"/>
+		    			<Button onAction="#handlePanButton" styleClass="map-graphic-button-icon,map-graphic-pan-icon"/>
+		    		</HBox>
+		    		<VBox fx:id="mapGraphic" VBox.vgrow="ALWAYS" onMousePressed="#mapGraphicMousePressed" onMouseReleased="#mapGraphicMouseReleased" onMouseDragged="#mapGraphicMouseDragged" onMouseClicked="#mapGraphicMouseClicked">
+		    			<ImageView fx:id="mapImageView" visible="false" managed="false" />
+			            <Rectangle fx:id="zoomRectangle" visible="false" managed="false" fill="transparent" styleClass="map-graphic-zoom-in-rectangle"/>
+		    			<Rectangle fx:id="areaOfInterestRectangle" visible="false" managed="false" fill="transparent" mouseTransparent="true"/>
+			        </VBox>
+		    	</VBox>
+		    </AnchorPane>
+		    <Pane fx:id="labelPane" managed="false" mouseTransparent="true"/>
+		    <Label fx:id="cursorCoordLabel"/>
+		</VBox>
+	</content>
+</DockPane>

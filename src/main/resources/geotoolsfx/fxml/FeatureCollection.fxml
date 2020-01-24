@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import dock.*?>
+
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="geotoolsfx.ui.controller.FeatureCollectionController">	
 	<VBox fx:id="tableContainer" VBox.vgrow="ALWAYS">
 		
 	</VBox>
-	<fx:include fx:id="collectionItemSelector" source="/collectionitemselector/fxml/Main.fxml"/>
+	<fx:include fx:id="collectionItemSelector" source="/collectionitemselector/fxml/CollectionItemSelector.fxml"/>
 </VBox>

@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import org.geotools.data.Query;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.factory.CommonFactoryFinder;
@@ -16,11 +14,9 @@ import org.opengis.feature.type.PropertyDescriptor;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.sort.SortBy;
 import org.opengis.filter.sort.SortOrder;
-
 import com.sun.javafx.scene.control.skin.VirtualFlow;
-
-import geotoolsfx.ItemSelectableFeatureCollection;
-import geotoolsfx.listener.FeatureCollectionListener;
+import geotoolsfx.FeatureCollectionWrapper;
+import geotoolsfx.listener.FeatureCollectionWrapperListener;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -36,7 +32,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
-public class FeatureCollectionController implements Initializable, FeatureCollectionListener {	
+public class FeatureCollectionController implements Initializable, FeatureCollectionWrapperListener {	
 	@FXML
 	private collectionitemselector.CollectionItemSelectorController collectionItemSelectorController;
 	
@@ -45,7 +41,7 @@ public class FeatureCollectionController implements Initializable, FeatureCollec
 	
 	private TableView<SimpleFeature> tableView;
 	
-	private ItemSelectableFeatureCollection itemSelectableFeatureCollection;
+	private FeatureCollectionWrapper featureCollectionWrapper;
 	
 	private List<String> invisibleFields = new ArrayList<String>();
 	private boolean idVisible;
@@ -71,7 +67,7 @@ public class FeatureCollectionController implements Initializable, FeatureCollec
 				if (!ignoreFeatureCollectionsEvent) {
 					while (c.next()) {
 						ignoreFeatureCollectionsEvent = true;
-						itemSelectableFeatureCollection.setSelected(tableView.getSelectionModel().getSelectedItems());
+						featureCollectionWrapper.getFeatureCollectionSelector().setCurrentIndex(tableView.getSelectionModel().getSelectedIndex());
 						ignoreFeatureCollectionsEvent = false;
 					}	
 				}
@@ -81,7 +77,7 @@ public class FeatureCollectionController implements Initializable, FeatureCollec
 		tableView.setSortPolicy(new Callback<TableView<SimpleFeature>, Boolean>() {
 			@Override
 			public Boolean call(TableView<SimpleFeature> param) {
-				if (!ignoreFeatureCollectionsEvent && itemSelectableFeatureCollection != null && !param.getColumns().isEmpty()) {
+				if (!ignoreFeatureCollectionsEvent && featureCollectionWrapper != null && !param.getColumns().isEmpty()) {
 					List<SortBy> sortBy = new ArrayList<SortBy>();
 					for (TableColumn<SimpleFeature, ? extends Object> column : param.getSortOrder()) {
 						SortOrder sortOrder = SortOrder.ASCENDING;
@@ -90,7 +86,7 @@ public class FeatureCollectionController implements Initializable, FeatureCollec
 						}
 						sortBy.add(ff.sort(column.getText(), sortOrder));
 					}
-					itemSelectableFeatureCollection.setSortBy(sortBy.toArray(new SortBy[0]));
+					featureCollectionWrapper.setSortBy(sortBy.toArray(new SortBy[0]));
 				}
 				return true;
 			}
@@ -98,15 +94,15 @@ public class FeatureCollectionController implements Initializable, FeatureCollec
 
 		tableView.getColumns().clear();
 		tableView.getItems().clear();
-		SimpleFeatureCollection featureCollection = itemSelectableFeatureCollection.getFeatures(true);
+		SimpleFeatureCollection featureCollection = featureCollectionWrapper.getFeatures();
 		List<TableColumn<SimpleFeature, Object>> sortedColumns = new ArrayList<TableColumn<SimpleFeature, Object>>();
 		for (PropertyDescriptor descriptor : featureCollection.getSchema().getDescriptors()) {
 			if (!invisibleFields.contains(descriptor.getName().getLocalPart())) {
 				TableColumn<SimpleFeature, Object> column = new TableColumn<SimpleFeature, Object>(descriptor.getName().getLocalPart());
 				tableView.getColumns().add(column);
-				Query query = itemSelectableFeatureCollection.getQuery();
-				if (query != null && query.getSortBy() != null) {
-					for (SortBy sortBy : query.getSortBy()) {
+				SortBy[] sortBys = featureCollectionWrapper.getQuery().getSortBy();
+				if (sortBys != null) {
+					for (SortBy sortBy : sortBys) {
 						if (sortBy.getPropertyName().getPropertyName().equals(column.getText())) {
 							SortType sortType = SortType.ASCENDING;
 							if (sortBy.getSortOrder().equals(SortOrder.DESCENDING)) {
@@ -140,7 +136,7 @@ public class FeatureCollectionController implements Initializable, FeatureCollec
 			features.close();	
 		}
 		
-		itemSelectableFeatureCollection.setCurrentIndex(1);
+		featureCollectionWrapper.getFeatureCollectionSelector().resetCurrentIndex();
 		
 		ignoreFeatureCollectionsEvent = false;
 	}
@@ -161,32 +157,25 @@ public class FeatureCollectionController implements Initializable, FeatureCollec
 		idVisible = visible;
 	}
 
-	public void setFeatureCollection(ItemSelectableFeatureCollection featureCollection) {
-		this.itemSelectableFeatureCollection = featureCollection;
+	public void setFeatureCollection(FeatureCollectionWrapper featureCollection) {
+		this.featureCollectionWrapper = featureCollection;
 		featureCollection.addFeatureCollectionListener(this);
-		collectionItemSelectorController.setCollectionItemSelector(featureCollection);
+		collectionItemSelectorController.setCollectionItemSelector(featureCollectionWrapper.getFeatureCollectionSelector());
+		featureCollectionWrapper.getFeatureCollectionSelector().addCollectionItemSelectorListener(this);
 		setTableView();
 	}
 
 	@Override
-	public void featuresSelected(ItemSelectableFeatureCollection featureCollection) {
-		// TODO Auto-generated method stub
-		if (!ignoreFeatureCollectionsEvent) {
-			ignoreFeatureCollectionsEvent = true;
-			tableView.getSelectionModel().clearSelection();
-			for (SimpleFeature feature : itemSelectableFeatureCollection.getSelectedFeatures()) {
-				tableView.getSelectionModel().select(feature);
-			}
-			ignoreFeatureCollectionsEvent = false;
-		} else {
-			System.out.println("feature selected from table");
-		}
-	}
-
-	@Override
-	public void queryChanged(ItemSelectableFeatureCollection featureCollection) {
+	public void queryChanged(FeatureCollectionWrapper featureCollection) {
 		ignoreFeatureCollectionsEvent = true;
 		setTableView();
 		ignoreFeatureCollectionsEvent = false;
 	}
+
+  @Override
+  public void currentIndexChanged() {
+    if (!ignoreFeatureCollectionsEvent) {
+      tableView.getSelectionModel().clearAndSelect(featureCollectionWrapper.getFeatureCollectionSelector().getCurrentIndex()); 
+    }
+  }
 }

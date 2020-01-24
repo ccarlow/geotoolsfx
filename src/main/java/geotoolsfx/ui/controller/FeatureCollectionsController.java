@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import dnddockfx.DockPane;
-import geotoolsfx.Config;
-import geotoolsfx.ItemSelectableFeatureCollection;
+import geotoolsfx.FeatureCollectionWrapper;
 import geotoolsfx.FeatureCollections;
 import geotoolsfx.listener.FeatureCollectionsListener;
 import javafx.fxml.FXML;
@@ -18,6 +17,9 @@ import javafx.scene.control.TreeView;
 public class FeatureCollectionsController implements Initializable, FeatureCollectionsListener {
 	@FXML
 	private TreeView<String> treeView;
+	
+	@FXML
+	private DockPane featureCollectionsDockPane;
 	
 	private FeatureCollections featureCollections;
 	
@@ -36,9 +38,11 @@ public class FeatureCollectionsController implements Initializable, FeatureColle
 		try {
 			Node root = (Node)fxmlLoader.load();
 			FeatureCollectionController controller = fxmlLoader.getController();
-			ItemSelectableFeatureCollection featureCollection = featureCollections.getByTitle(treeItem.getValue());
+			FeatureCollectionWrapper featureCollection = featureCollections.getByTitle(treeItem.getValue());
 			controller.setFeatureCollection(featureCollection);
-			new DockPane(treeItem.getValue(), root).show();
+			DockPane dockPane = new DockPane(treeItem.getValue(), root);
+			dockPane.setDockManager(featureCollectionsDockPane.getDockManager());
+			dockPane.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,7 +54,7 @@ public class FeatureCollectionsController implements Initializable, FeatureColle
 		try {
 			Node root = (Node)fxmlLoader.load();
 			QueryController controller = fxmlLoader.getController();
-			ItemSelectableFeatureCollection featureCollection = featureCollections.getByTitle(treeItem.getValue());
+			FeatureCollectionWrapper featureCollection = featureCollections.getByTitle(treeItem.getValue());
 			controller.setFeatureCollection(featureCollection);
 			new DockPane(treeItem.getValue(), root).show();
 		} catch (IOException e) {
@@ -64,7 +68,7 @@ public class FeatureCollectionsController implements Initializable, FeatureColle
 		try {
 			Node root = (Node)fxmlLoader.load();
 			QueriesController controller = fxmlLoader.getController();
-			ItemSelectableFeatureCollection featureCollection = featureCollections.getByTitle(treeItem.getValue());
+			FeatureCollectionWrapper featureCollection = featureCollections.getByTitle(treeItem.getValue());
 			controller.setFeatureCollection(featureCollection);
 			new DockPane(treeItem.getValue(), root).show();
 		} catch (IOException e) {
@@ -78,7 +82,7 @@ public class FeatureCollectionsController implements Initializable, FeatureColle
 		try {
 			Node root = (Node)fxmlLoader.load();
 			FiltersController controller = fxmlLoader.getController();
-			ItemSelectableFeatureCollection featureCollection = featureCollections.getByTitle(treeItem.getValue());
+			FeatureCollectionWrapper featureCollection = featureCollections.getByTitle(treeItem.getValue());
 			controller.addFeatureCollection(featureCollection);
 			new DockPane(treeItem.getValue(), root).show();
 		} catch (IOException e) {
@@ -92,7 +96,7 @@ public class FeatureCollectionsController implements Initializable, FeatureColle
 		try {
 			Node root = (Node)fxmlLoader.load();
 			SortBysController controller = fxmlLoader.getController();
-			ItemSelectableFeatureCollection featureCollection = featureCollections.getByTitle(treeItem.getValue());
+			FeatureCollectionWrapper featureCollection = featureCollections.getByTitle(treeItem.getValue());
 			controller.setFeatureCollection(featureCollection);
 			new DockPane(treeItem.getValue(), root).show();
 		} catch (IOException e) {
@@ -101,7 +105,7 @@ public class FeatureCollectionsController implements Initializable, FeatureColle
 	}
 	
 	@Override
-	public void featureCollectionAdded(FeatureCollections featureCollections, ItemSelectableFeatureCollection featureCollection) {
+	public void featureCollectionAdded(FeatureCollections featureCollections, FeatureCollectionWrapper featureCollection) {
 		treeView.getRoot().getChildren().add(new TreeItem<String>(featureCollection.getTitle()));
 	}
 }

@@ -17,7 +17,7 @@ import org.opengis.feature.Feature;
 import geotoolsfx.listener.FeatureCollectionsListener;
 
 public class FeatureCollections {
-	private Map<String, ItemSelectableFeatureCollection> featureCollections = new HashMap<String, ItemSelectableFeatureCollection>();
+	private Map<String, FeatureCollectionWrapper> featureCollections = new HashMap<String, FeatureCollectionWrapper>();
 	private DataStores dataStores;
 	private List<FeatureCollectionsListener> featureCollectionsListeners = new ArrayList<FeatureCollectionsListener>();
 	
@@ -43,31 +43,38 @@ public class FeatureCollections {
 		addFeatureCollection(configFeatureCollection.title, configFeatureCollection.typeName, configFeatureCollection.dataStore, configFeatureCollection.indexWithFilter);
 	}
 	
-	public void fireFeatureCollectionAdded(ItemSelectableFeatureCollection featureCollection) {
+	public void fireFeatureCollectionAdded(FeatureCollectionWrapper featureCollection) {
 		for (FeatureCollectionsListener listener : featureCollectionsListeners) {
 			listener.featureCollectionAdded(this, featureCollection);
 		}
 	}
 	
+	public void addFeatureCollection(FeatureCollectionWrapper featureCollection) {
+	  featureCollections.put(featureCollection.getTitle(), featureCollection);
+      fireFeatureCollectionAdded(featureCollection);
+	}
+	
 	public void addFeatureCollection(String collectionTitle, String typeName, String dataStoreTitle, Boolean indexFeaturesWithFilter) {
-		ItemSelectableFeatureCollection featureCollection = featureCollections.get(collectionTitle);
+	  FeatureCollectionWrapper featureCollection = featureCollections.get(collectionTitle);
 		if (!featureCollections.containsKey(collectionTitle)) {
 			try {
 				DataStore dataStore = dataStores.getDataStore(dataStoreTitle);
-				SimpleFeatureSource featureSource = dataStore.getFeatureSource(typeName);
-				featureCollection = new ItemSelectableFeatureCollection(collectionTitle, featureSource);
-				if (indexFeaturesWithFilter != null) {
-					featureCollection.setIsIndexWithFilter(indexFeaturesWithFilter);	
+				SimpleFeatureSource featureSource = null;
+				if (dataStore != null) {
+				  featureSource = dataStore.getFeatureSource(typeName);
 				}
-				featureCollections.put(collectionTitle, featureCollection);
-				fireFeatureCollectionAdded(featureCollection);
+				featureCollection = new FeatureCollectionWrapper(collectionTitle, featureSource);
+//				if (indexFeaturesWithFilter != null) {
+//					featureCollection.setIsIndexWithFilter(indexFeaturesWithFilter);	
+//				}
+				addFeatureCollection(featureCollection);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	
-	public ItemSelectableFeatureCollection getByTitle(String title) {
+	public FeatureCollectionWrapper getByTitle(String title) {
 		return featureCollections.get(title);
 	}
 }

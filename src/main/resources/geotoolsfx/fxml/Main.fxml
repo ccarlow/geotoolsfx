@@ -10,11 +10,7 @@
 			</content>
 		</DockPane>
 		
-		<DockPane fx:id="featureCollectionsDockPane" title="Feature Collections">
-			<content>
-				<fx:include VBox.vgrow="ALWAYS" fx:id="featureCollections" source="FeatureCollections.fxml"/>
-			</content>
-		</DockPane>
+		<fx:include VBox.vgrow="ALWAYS" fx:id="featureCollections" source="FeatureCollections.fxml"/>
 		
 		<fx:include VBox.vgrow="ALWAYS" fx:id="mapContents" source="MapContents.fxml"/>
 		

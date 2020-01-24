@@ -76,8 +76,8 @@ public class MapContents {
 			
 			for (Config.Layer configLayer : configMapContent.layers) {
 				Style style = styles.getByConfigLayer(configLayer);
-				ItemSelectableFeatureCollection featureCollection = featureCollections.getByTitle(configLayer.featureCollection);
-				Layer layer = new FeatureLayer(featureCollection.getFeatures(true), style);
+				FeatureCollectionWrapper featureCollection = featureCollections.getByTitle(configLayer.featureCollection);
+				Layer layer = new FeatureLayer(featureCollection.getFeatures(), style);
 				layer.setTitle(configLayer.getTitle());
 				mapContent.addLayer(layer);
 			}

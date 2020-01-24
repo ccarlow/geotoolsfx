@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
@@ -13,14 +11,15 @@ import org.geotools.util.factory.GeoTools;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.sort.SortBy;
 import org.opengis.filter.sort.SortOrder;
-
-import geotoolsfx.ItemSelectableFeatureCollection;
+import geotoolsfx.FeatureCollectionWrapper;
+import geotoolsfx.QueryWrapper;
 import geotoolsfx.listener.FeatureCollectionListener;
+import geotoolsfx.listener.QueryListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 
-public class QueryController implements Initializable, FeatureCollectionListener {
+public class QueryController implements Initializable, QueryListener {
 	@FXML
 	private TextArea filterTextArea;
 	
@@ -29,7 +28,7 @@ public class QueryController implements Initializable, FeatureCollectionListener
 	
 	private FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
 	
-	private ItemSelectableFeatureCollection featureCollection;
+	private FeatureCollectionWrapper featureCollection;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -52,29 +51,21 @@ public class QueryController implements Initializable, FeatureCollectionListener
 	}
 	
 	public void submit() {
-		Query query = new Query();
-		try {
-			query.setFilter(CQL.toFilter(filterTextArea.getText()));
-		} catch (CQLException e) {
-			e.printStackTrace();
-		}
-		query.setSortBy(getSortByFromText());
-		featureCollection.setQuery(query);
+	    QueryWrapper query = featureCollection.getQuery();
+	    try {
+	      String alias = query.getAlias();
+          query.setQuery(query.getAlias(), CQL.toFilter(filterTextArea.getText()), getSortByFromText());
+        } catch (CQLException e) {
+          e.printStackTrace();
+        }
 	}
 
-	public void setFeatureCollection(ItemSelectableFeatureCollection featureCollection) {
+	public void setFeatureCollection(FeatureCollectionWrapper featureCollection) {
 		this.featureCollection = featureCollection;
 	}
-	
-	@Override
-	public void featuresSelected(ItemSelectableFeatureCollection featureCollection) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void queryChanged(ItemSelectableFeatureCollection featureCollection) {
-		// TODO Auto-generated method stub
-		
-	}
+  @Override
+  public void queryChanged() {
+    
+  }
 }

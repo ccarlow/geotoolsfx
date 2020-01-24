@@ -1,26 +1,15 @@
 package geotoolsfx.ui.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.text.cql2.CQL;
-import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.util.factory.GeoTools;
 import org.opengis.filter.FilterFactory2;
-import org.opengis.filter.sort.SortBy;
-import org.opengis.filter.sort.SortOrder;
-
-import geotoolsfx.ItemSelectableFeatureCollection;
+import geotoolsfx.FeatureCollectionWrapper;
 import geotoolsfx.Queries;
-import geotoolsfx.listener.FeatureCollectionListener;
 import geotoolsfx.listener.QueriesListener;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
 
 public class QueriesController implements Initializable, QueriesListener {
 	
@@ -32,7 +21,7 @@ public class QueriesController implements Initializable, QueriesListener {
 	}
 
 	@Override
-	public void setFeatureCollection(ItemSelectableFeatureCollection featureCollection) {
+	public void setFeatureCollection(FeatureCollectionWrapper featureCollection) {
 		// TODO Auto-generated method stub
 		
 	}

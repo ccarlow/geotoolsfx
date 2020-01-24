@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.Query;
@@ -20,7 +19,6 @@ import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.sort.SortBy;
-
 import collectionitemselector.AbstractCollectionItemSelector;
 import geotoolsfx.listener.FeatureCollectionListener;
 
@@ -28,8 +26,8 @@ public class ItemSelectableFeatureCollection extends AbstractCollectionItemSelec
 	private SimpleFeatureSource featureSource;
 	private List<SimpleFeature> selectedFeatures = new ArrayList<SimpleFeature>();
 	private List<FeatureCollectionListener> featureCollectionListeners = new ArrayList<FeatureCollectionListener>();
+	private SimpleFeatureCollection featureCollection;
 	private Query query;
-	private Queries queries = new Queries();
 	private Filters filters = new Filters();
 	private SortBys sortBys = new SortBys();
 	private int currentIndex = 0;
@@ -41,7 +39,14 @@ public class ItemSelectableFeatureCollection extends AbstractCollectionItemSelec
 	public ItemSelectableFeatureCollection(String title, SimpleFeatureSource featureSource) {
 		this.title = title;
 		this.featureSource = featureSource;
-		featureSource.addFeatureListener(this);
+		if (featureSource != null) {
+		  featureSource.addFeatureListener(this); 
+		}
+	}
+	
+	public ItemSelectableFeatureCollection(String title, SimpleFeatureCollection featureCollection) {
+      this.title = title;
+      this.featureCollection = featureCollection;
 	}
 	
 	public void setIsIndexWithFilter(boolean value) {
@@ -53,30 +58,33 @@ public class ItemSelectableFeatureCollection extends AbstractCollectionItemSelec
 	}
 	
 	public void updateFeature(SimpleFeature feature) {
-		
-		String[] attributes = new String[feature.getProperties().size()];
-		Object[] values = new Object[feature.getProperties().size()];
-		
-		int index = 0;
-		Iterator<Property> properties = feature.getProperties().iterator();
-		while (properties.hasNext()) {
-			Property property = properties.next();
-			attributes[index] = property.getName().getLocalPart();
-			values[index] = property.getValue();
-			index++;
-		}
-		
-		try {
-			((SimpleFeatureStore)featureSource).modifyFeatures(attributes, values, ff.id(feature.getIdentifier()));
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (featureSource != null) {
+		  String[] attributes = new String[feature.getProperties().size()];
+	        Object[] values = new Object[feature.getProperties().size()];
+	        
+	        int index = 0;
+	        Iterator<Property> properties = feature.getProperties().iterator();
+	        while (properties.hasNext()) {
+	            Property property = properties.next();
+	            attributes[index] = property.getName().getLocalPart();
+	            values[index] = property.getValue();
+	            index++;
+	        }
+	        
+	        try {
+	            ((SimpleFeatureStore)featureSource).modifyFeatures(attributes, values, ff.id(feature.getIdentifier()));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
 		}
 	}
 	
 	public void updateFeatures(List<SimpleFeature> features) {
-		for (SimpleFeature feature : features) {
-			updateFeature(feature);
-		}
+	    if (featureSource != null) {
+	      for (SimpleFeature feature : features) {
+            updateFeature(feature);
+          } 
+	    }
 	}
 	
 	public Filters getFilters() {
@@ -92,18 +100,22 @@ public class ItemSelectableFeatureCollection extends AbstractCollectionItemSelec
 	}
 	
 	public SimpleFeatureCollection getFeatures(boolean useFilter) {
-		if (this.query == null) {
-			this.query = new Query();
-		}
-		Query query = new Query();
-		if (useFilter) {
-			query = this.query;
-		}
-		try {
-			return featureSource.getFeatures(query);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	    if (featureSource != null) {
+	      if (this.query == null) {
+            this.query = new Query();
+          }
+          Query query = new Query();
+          if (useFilter) {
+              query = this.query;
+          }
+          try {
+              return featureSource.getFeatures(query);
+          } catch (IOException e) {
+              e.printStackTrace();
+          } 
+	    } else if (featureCollection != null) {
+	      return featureCollection;
+	    }
 		return null;
 	}
 	
@@ -116,9 +128,17 @@ public class ItemSelectableFeatureCollection extends AbstractCollectionItemSelec
 		fireQueryChanged();
 		SimpleFeatureIterator features = null;
 		try {
-			features = (SimpleFeatureIterator) featureSource.getFeatures(query).features();
+		    if (featureSource != null) {
+		      features = (SimpleFeatureIterator) featureSource.getFeatures().features(); 
+		    } else if (featureCollection != null) {
+		      features = featureCollection.features();
+		    }
+		    //set the index of the first feature that evaluates from the filter
 			if (features.hasNext()) {
-				setSelected(Arrays.asList(features.next()));
+			  SimpleFeature feature = features.next();
+			  if (query.getFilter().evaluate(feature)) {
+			    setSelected(Arrays.asList(features.next())); 
+			  }
 			}	
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -311,4 +331,9 @@ public class ItemSelectableFeatureCollection extends AbstractCollectionItemSelec
 	public int getListSize() {
 		return listSize;
 	}
+
+  @Override
+  public void resetCurrentIndex() {
+    
+  }
 }

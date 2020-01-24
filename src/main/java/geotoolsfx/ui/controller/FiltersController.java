@@ -2,10 +2,8 @@ package geotoolsfx.ui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import geotoolsfx.FeatureCollectionWrapper;
 import geotoolsfx.Filters;
-import geotoolsfx.ItemSelectableFeatureCollection;
-import geotoolsfx.listener.FeatureCollectionListener;
 import geotoolsfx.listener.FiltersListener;
 import javafx.fxml.Initializable;
 
@@ -18,7 +16,7 @@ public class FiltersController implements Initializable, FiltersListener {
 	}
 	
 	@Override
-	public void addFeatureCollection(ItemSelectableFeatureCollection featureCollection) {
+	public void addFeatureCollection(FeatureCollectionWrapper featureCollection) {
 		// TODO Auto-generated method stub
 		
 	}

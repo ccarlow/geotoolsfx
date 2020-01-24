@@ -2,8 +2,7 @@ package geotoolsfx.ui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import geotoolsfx.ItemSelectableFeatureCollection;
+import geotoolsfx.FeatureCollectionWrapper;
 import geotoolsfx.SortBys;
 import geotoolsfx.listener.SortBysListener;
 import javafx.fxml.Initializable;
@@ -17,7 +16,7 @@ public class SortBysController implements Initializable, SortBysListener {
 	}
 	
 	@Override
-	public void setFeatureCollection(ItemSelectableFeatureCollection featureCollection) {
+	public void setFeatureCollection(FeatureCollectionWrapper featureCollection) {
 		// TODO Auto-generated method stub
 		
 	}

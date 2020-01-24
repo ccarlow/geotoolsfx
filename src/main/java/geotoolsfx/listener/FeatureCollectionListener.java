@@ -1,8 +1,8 @@
 package geotoolsfx.listener;
 
-import geotoolsfx.ItemSelectableFeatureCollection;
+import geotoolsfx.FeatureCollectionWrapper;
 
 public interface FeatureCollectionListener {
-	public void featuresSelected(ItemSelectableFeatureCollection featureCollection);
-	public void queryChanged(ItemSelectableFeatureCollection featureCollection);
+//	public void featuresSelected(FeatureCollectionWrapper featureCollection);
+//	public void queryChanged(FeatureCollectionWrapper featureCollection);
 }

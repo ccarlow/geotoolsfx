@@ -15,11 +15,14 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
 
 public class FiltersFactory {
+    public final static String UNIQUE= "uniqueValues";
+    public final static String WITHIN = "within";
+  
 	private static final FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
 	
-	public static void unique(ItemSelectableFeatureCollection featureCollection, String factoryName, boolean useFilter, List<String> attributes) {
+	public static void unique(FeatureCollectionWrapper featureCollection, String factoryName, boolean useFilter, List<String> attributes) {
 		Map<Object, Map> valueTree = new HashMap<Object, Map>();
-		SimpleFeatureIterator features = featureCollection.getFeatures(useFilter).features();
+		SimpleFeatureIterator features = featureCollection.getFeatures().features();
 		try {
 			while (features.hasNext()) {
 				SimpleFeature feature = features.next();
@@ -77,13 +80,13 @@ public class FiltersFactory {
 		}
 	}
 	
-	public static List<List<Map<String, Object>>> within(ItemSelectableFeatureCollection featureCollection, String factoryName, boolean useFilter, ItemSelectableFeatureCollection containerFeatureCollection, String aliasAttribute) {
-		SimpleFeatureIterator containerFeatures = containerFeatureCollection.getFeatures(false).features();
+	public static List<List<Map<String, Object>>> within(FeatureCollectionWrapper featureCollection, String factoryName, boolean useFilter, FeatureCollectionWrapper containerFeatureCollection, String aliasAttribute) {
+		SimpleFeatureIterator containerFeatures = containerFeatureCollection.getFeatures().features();
 		try {
 			while (containerFeatures.hasNext()) {
 				SimpleFeature containerFeature = containerFeatures.next();
 				Filter filter = ff.within(ff.property("the_geom"), ff.literal(containerFeature.getDefaultGeometryProperty().getValue()));
-				SimpleFeatureCollection containedCollection = featureCollection.getFeatures(useFilter).subCollection(filter);
+				SimpleFeatureCollection containedCollection = featureCollection.getFeatures().subCollection(filter);
 				Filters filters = featureCollection.getFilters();
 				if (!containedCollection.isEmpty()) {
 					String alias = containerFeature.getAttribute(aliasAttribute).toString();

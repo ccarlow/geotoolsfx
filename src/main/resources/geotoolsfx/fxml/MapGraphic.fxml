@@ -15,7 +15,7 @@
 		    			<Button onAction="#handleFullExtentButton" styleClass="map-graphic-button-icon,map-graphic-full-extent-icon"/>
 		    			<Button onAction="#handlePanButton" styleClass="map-graphic-button-icon,map-graphic-pan-icon"/>
 		    		</HBox>
-		    		<VBox fx:id="mapGraphic" VBox.vgrow="ALWAYS" onMousePressed="#mapGraphicMousePressed" onMouseReleased="#mapGraphicMouseReleased" onMouseDragged="#mapGraphicMouseDragged" onMouseClicked="#mapGraphicMouseClicked">
+		    		<VBox fx:id="mapGraphic" styleClass="map-graphic" VBox.vgrow="ALWAYS" onMousePressed="#mapGraphicMousePressed" onMouseReleased="#mapGraphicMouseReleased" onMouseDragged="#mapGraphicMouseDragged" onMouseClicked="#mapGraphicMouseClicked">
 		    			<ImageView fx:id="mapImageView" visible="false" managed="false" />
 			            <Rectangle fx:id="zoomRectangle" visible="false" managed="false" fill="transparent" styleClass="map-graphic-zoom-in-rectangle"/>
 		    			<Rectangle fx:id="areaOfInterestRectangle" visible="false" managed="false" fill="transparent" mouseTransparent="true"/>

@@ -1,3 +1,7 @@
+.map-graphic {
+	-fx-border-color:#000000;
+}
+
 .map-graphic-button-icon {
 	-size: 30;
 	-fx-min-width: -size;

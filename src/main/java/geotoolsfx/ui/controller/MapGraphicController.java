@@ -80,8 +80,6 @@ public class MapGraphicController implements Initializable, MapLayerListListener
 				setMapGraphics();
 			}
 		});
-		
-		mapGraphic.setStyle("-fx-border-color:black");
 	}
 	
 	public DockPane getDockPane() {

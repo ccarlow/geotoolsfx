@@ -9,38 +9,38 @@ import javafx.fxml.Initializable;
 
 public class FiltersController implements Initializable, FiltersListener {
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void addFeatureCollection(FeatureCollectionWrapper featureCollection) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void filterAdded(Filters filters, String group, String alias) {
-		// TODO Auto-generated method stub
-		
-	}
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    // TODO Auto-generated method stub
 
-	@Override
-	public void filterRemoved(Filters filters, String group, String alias) {
-		// TODO Auto-generated method stub
-		
-	}
+  }
 
-	@Override
-	public void filterChanged(Filters filters, String group, String alias) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void submit() {
-		
-	}
+  @Override
+  public void addFeatureCollection(FeatureCollectionWrapper featureCollection) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void filterAdded(Filters filters, String group, String alias) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void filterRemoved(Filters filters, String group, String alias) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void filterChanged(Filters filters, String group, String alias) {
+    // TODO Auto-generated method stub
+
+  }
+
+  public void submit() {
+
+  }
 
 }

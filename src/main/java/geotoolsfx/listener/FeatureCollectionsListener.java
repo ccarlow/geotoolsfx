@@ -4,5 +4,6 @@ import geotoolsfx.FeatureCollectionWrapper;
 import geotoolsfx.FeatureCollections;
 
 public interface FeatureCollectionsListener {
-	public void featureCollectionAdded(FeatureCollections featureCollections, FeatureCollectionWrapper featureCollection);
+  public void featureCollectionAdded(FeatureCollections featureCollections,
+      FeatureCollectionWrapper featureCollection);
 }

@@ -6,14 +6,14 @@ import javafx.fxml.Initializable;
 
 public class FilterCombinatorsController implements Initializable {
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void submit() {
-		
-	}
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    // TODO Auto-generated method stub
+
+  }
+
+  public void submit() {
+
+  }
 
 }

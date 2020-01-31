@@ -25,112 +25,115 @@ import geotoolsfx.listener.FeatureCollectionListener;
 import geotoolsfx.listener.FeatureCollectionWrapperListener;
 
 public class FeatureCollectionWrapper implements FeatureListener {
-    private FeatureCollectionWrapperSelector featureCollectionSelector = new FeatureCollectionWrapperSelector();
-	private SimpleFeatureSource featureSource;
-	private List<FeatureCollectionWrapperListener> featureCollectionListeners = new ArrayList<FeatureCollectionWrapperListener>();
-	private SimpleFeatureCollection featureCollection;
-	private QueryWrapper query = new QueryWrapper();
-	private Filters filters = new Filters();
-	private SortBys sortBys = new SortBys();
-	private String title;
-	private FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
-	
-	public FeatureCollectionWrapper(String title, SimpleFeatureSource featureSource) {
-		this.title = title;
-		this.featureSource = featureSource;
-		if (featureSource != null) {
-		  featureSource.addFeatureListener(this); 
-		}
-		featureCollectionSelector.setFeatureCollection(this);
-	}
-	
-	public FeatureCollectionWrapper(String title, SimpleFeatureCollection featureCollection) {
-      this.title = title;
-      this.featureCollection = featureCollection;
-      featureCollectionSelector.setFeatureCollection(this);
-	}
-	
-	public SimpleFeatureSource getFeatureSource() {
-		return featureSource;
-	}
-	
-	public void updateFeature(SimpleFeature feature) {
-		if (featureSource != null) {
-		  String[] attributes = new String[feature.getProperties().size()];
-	        Object[] values = new Object[feature.getProperties().size()];
-	        
-	        int index = 0;
-	        Iterator<Property> properties = feature.getProperties().iterator();
-	        while (properties.hasNext()) {
-	            Property property = properties.next();
-	            attributes[index] = property.getName().getLocalPart();
-	            values[index] = property.getValue();
-	            index++;
-	        }
-	        
-	        try {
-	            ((SimpleFeatureStore)featureSource).modifyFeatures(attributes, values, ff.id(feature.getIdentifier()));
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } 
-		}
-	}
-	
-	public void updateFeatures(List<SimpleFeature> features) {
-	    if (featureSource != null) {
-	      for (SimpleFeature feature : features) {
-            updateFeature(feature);
-          } 
-	    }
-	}
-	
-	public FeatureCollectionWrapperSelector getFeatureCollectionSelector() {
-	  return featureCollectionSelector;
-	}
-	
-	public QueryWrapper getQuery() {
-	  return query;
-	}
-	
-	public Filters getFilters() {
-		return filters;
-	}
-	
-	public SortBys getSortBys() {
-		return sortBys;
-	}
-	
-	public String getTitle() {
-		return title;
-	}
-	
-	public SimpleFeatureCollection getFeatures() {
-	    if (featureSource != null) {
-	      featureCollection = query.getFeatures(featureSource);
-	      return featureCollection;
-	    } else if (featureCollection != null) {
-	      return featureCollection;
-	    }
-		return null;
-	}
-	
-	public void setSortBy(SortBy[] sortBy) {
-		query.setQuery(query.getAlias(), query.getFilter(), sortBy);
-		fireQueryChanged();
-	}
-	
-	public void addFeatureCollectionListener(FeatureCollectionWrapperListener listener) {
-		this.featureCollectionListeners.add(listener);
-	}
-	
-	public void fireQueryChanged() {
-		for (FeatureCollectionWrapperListener listener : featureCollectionListeners) {
-		  listener.queryChanged(this);
-		}
-	}
+  private FeatureCollectionWrapperSelector featureCollectionSelector =
+      new FeatureCollectionWrapperSelector();
+  private SimpleFeatureSource featureSource;
+  private List<FeatureCollectionWrapperListener> featureCollectionListeners =
+      new ArrayList<FeatureCollectionWrapperListener>();
+  private SimpleFeatureCollection featureCollection;
+  private QueryWrapper query = new QueryWrapper();
+  private Filters filters = new Filters();
+  private SortBys sortBys = new SortBys();
+  private String title;
+  private FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
 
-	@Override
-	public void changed(FeatureEvent featureEvent) {
-		System.out.println("Feature Event fired");
-	}
+  public FeatureCollectionWrapper(String title, SimpleFeatureSource featureSource) {
+    this.title = title;
+    this.featureSource = featureSource;
+    if (featureSource != null) {
+      featureSource.addFeatureListener(this);
+    }
+    featureCollectionSelector.setFeatureCollection(this);
+  }
+
+  public FeatureCollectionWrapper(String title, SimpleFeatureCollection featureCollection) {
+    this.title = title;
+    this.featureCollection = featureCollection;
+    featureCollectionSelector.setFeatureCollection(this);
+  }
+
+  public SimpleFeatureSource getFeatureSource() {
+    return featureSource;
+  }
+
+  public void updateFeature(SimpleFeature feature) {
+    if (featureSource != null) {
+      String[] attributes = new String[feature.getProperties().size()];
+      Object[] values = new Object[feature.getProperties().size()];
+
+      int index = 0;
+      Iterator<Property> properties = feature.getProperties().iterator();
+      while (properties.hasNext()) {
+        Property property = properties.next();
+        attributes[index] = property.getName().getLocalPart();
+        values[index] = property.getValue();
+        index++;
+      }
+
+      try {
+        ((SimpleFeatureStore) featureSource).modifyFeatures(attributes, values,
+            ff.id(feature.getIdentifier()));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public void updateFeatures(List<SimpleFeature> features) {
+    if (featureSource != null) {
+      for (SimpleFeature feature : features) {
+        updateFeature(feature);
+      }
+    }
+  }
+
+  public FeatureCollectionWrapperSelector getFeatureCollectionSelector() {
+    return featureCollectionSelector;
+  }
+
+  public QueryWrapper getQuery() {
+    return query;
+  }
+
+  public Filters getFilters() {
+    return filters;
+  }
+
+  public SortBys getSortBys() {
+    return sortBys;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public SimpleFeatureCollection getFeatures() {
+    if (featureSource != null) {
+      featureCollection = query.getFeatures(featureSource);
+      return featureCollection;
+    } else if (featureCollection != null) {
+      return featureCollection;
+    }
+    return null;
+  }
+
+  public void setSortBy(SortBy[] sortBy) {
+    query.setQuery(query.getAlias(), query.getFilter(), sortBy);
+    fireQueryChanged();
+  }
+
+  public void addFeatureCollectionListener(FeatureCollectionWrapperListener listener) {
+    this.featureCollectionListeners.add(listener);
+  }
+
+  public void fireQueryChanged() {
+    for (FeatureCollectionWrapperListener listener : featureCollectionListeners) {
+      listener.queryChanged(this);
+    }
+  }
+
+  @Override
+  public void changed(FeatureEvent featureEvent) {
+    System.out.println("Feature Event fired");
+  }
 }

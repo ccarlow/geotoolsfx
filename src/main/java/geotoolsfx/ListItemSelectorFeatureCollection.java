@@ -8,15 +8,16 @@ import collectionitemselector.ListItemSelector;
 import geotoolsfx.listener.FeatureCollectionListener;
 
 public class ListItemSelectorFeatureCollection extends ListFeatureCollection {
-  
+
   private ListItemSelector listItemSelector;
-  
+
   public ListItemSelectorFeatureCollection(ListItemSelector listItemSelector) {
-    super(((SimpleFeature)listItemSelector.getList().get(0)).getType(), listItemSelector.getList());
+    super(((SimpleFeature) listItemSelector.getList().get(0)).getType(),
+        listItemSelector.getList());
     this.listItemSelector = listItemSelector;
   }
 
   public SimpleFeatureIterator features() {
-      return new ListItemSelectorFeatureCollectionIterator(listItemSelector);
+    return new ListItemSelectorFeatureCollectionIterator(listItemSelector);
   }
 }

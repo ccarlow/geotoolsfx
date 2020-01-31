@@ -12,35 +12,35 @@ import geotoolsfx.listener.QueriesListener;
 import javafx.fxml.Initializable;
 
 public class QueriesController implements Initializable, QueriesListener {
-	
-	private FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-	
-	}
 
-	@Override
-	public void setFeatureCollection(FeatureCollectionWrapper featureCollection) {
-		// TODO Auto-generated method stub
-		
-	}
+  private FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
 
-	@Override
-	public void queryAdded(Queries queries, Query query) {
-		// TODO Auto-generated method stub
-		
-	}
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
 
-	@Override
-	public void queryRemoved(Queries queries, Query query) {
-		// TODO Auto-generated method stub
-		
-	}
+  }
 
-	@Override
-	public void queryChanged(Queries queries, Query query) {
-		// TODO Auto-generated method stub
-		
-	}
+  @Override
+  public void setFeatureCollection(FeatureCollectionWrapper featureCollection) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void queryAdded(Queries queries, Query query) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void queryRemoved(Queries queries, Query query) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void queryChanged(Queries queries, Query query) {
+    // TODO Auto-generated method stub
+
+  }
 }

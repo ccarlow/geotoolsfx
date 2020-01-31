@@ -11,7 +11,7 @@ public class FeatureCollectionWrapperSelector extends AbstractCollectionItemSele
     this.featureCollection = featureCollection;
     resetCurrentIndex();
   }
-  
+
   @Override
   public void setCurrentIndex(int index) {
     if (index >= 1 && index <= featureCollection.getFeatures().size()) {
@@ -29,10 +29,10 @@ public class FeatureCollectionWrapperSelector extends AbstractCollectionItemSele
         SimpleFeature feature = features.next();
         if (index > currentIndex) {
           if (featureCollection.getQuery().evaluate(feature)) {
-           currentIndex = index;
-           notifyIndexChanged();
-           break;
-          } 
+            currentIndex = index;
+            notifyIndexChanged();
+            break;
+          }
         }
         index++;
       }
@@ -42,7 +42,7 @@ public class FeatureCollectionWrapperSelector extends AbstractCollectionItemSele
   @Override
   public void setPreviousIndex() {
     if (currentIndex - 1 >= 1) {
-      
+
       SimpleFeatureIterator features = featureCollection.getFeatures().features();
       int previousIndex = currentIndex;
       int index = 1;

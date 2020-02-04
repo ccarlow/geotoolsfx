@@ -3,19 +3,14 @@ package geotoolsfx;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.geotools.data.DataStore;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
-import org.opengis.feature.Feature;
-import geotoolsfx.listener.ConfigListener;
+import geotoolsfx.listener.ConfigFeatureCollectionListener;
 import geotoolsfx.listener.FeatureCollectionsListener;
 
-public class FeatureCollections implements ConfigListener {
+public class FeatureCollections implements ConfigFeatureCollectionListener {
   private Map<String, FeatureCollectionWrapper> featureCollections =
       new HashMap<String, FeatureCollectionWrapper>();
   private DataStores dataStores;
@@ -54,20 +49,20 @@ public class FeatureCollections implements ConfigListener {
       Boolean indexFeaturesWithFilter) {
     FeatureCollectionWrapper featureCollection = featureCollections.get(collectionTitle);
     if (!featureCollections.containsKey(collectionTitle)) {
-      try {
-        DataStore dataStore = dataStores.getDataStore(dataStoreTitle);
-        SimpleFeatureSource featureSource = null;
-        if (dataStore != null) {
+      DataStore dataStore = dataStores.getDataStore(dataStoreTitle);
+      SimpleFeatureSource featureSource = null;
+      if (dataStore != null) {
+        try {
           featureSource = dataStore.getFeatureSource(typeName);
+        } catch (IOException e) {
+          e.printStackTrace();
         }
-        featureCollection = new FeatureCollectionWrapper(collectionTitle, featureSource);
-        // if (indexFeaturesWithFilter != null) {
-        // featureCollection.setIsIndexWithFilter(indexFeaturesWithFilter);
-        // }
-        addFeatureCollection(featureCollection);
-      } catch (IOException e) {
-        e.printStackTrace();
       }
+      featureCollection = new FeatureCollectionWrapper(collectionTitle, featureSource);
+      // if (indexFeaturesWithFilter != null) {
+      // featureCollection.setIsIndexWithFilter(indexFeaturesWithFilter);
+      // }
+      addFeatureCollection(featureCollection);
     }
   }
 
@@ -76,9 +71,7 @@ public class FeatureCollections implements ConfigListener {
   }
 
   @Override
-  public void configAdded(Config config) {
-    for (Config.FeatureCollection configFeatureCollection : config.featureCollections) {
-      addFeatureCollectionFromConfig(configFeatureCollection);
-    }
+  public void configFeatureCollectionAdded(Config.FeatureCollection featureCollection) {
+    addFeatureCollectionFromConfig(featureCollection);
   }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="geotoolsfx.ui.controller.ConfigEditMapContentController">
+	<GridPane>
+		<Label text="Title"/>
+		<TextField fx:id="title" GridPane.columnIndex="1"/>
+	</GridPane>
+	
+	<!--
+	<TableView fx:id="layerTableView">
+		<columns>
+			<TableColumn text="Layer Name"/>
+			<TableColumn text="Feature Collection"/>
+			<TableColumn text="Style"/>
+		</columns>
+	</TableView>
+	-->
+	
+	<TreeView fx:id="layerTreeView">
+		<root>
+			<TreeItem value="Layers" expanded="true"/>
+		</root>
+		<contextMenu>
+			<ContextMenu fx:id="contextMenu">
+				<items>
+					<MenuItem text="Open" onAction="#openLayerConfig"/>
+				</items>
+			</ContextMenu>
+		</contextMenu>
+	</TreeView>
+</VBox>

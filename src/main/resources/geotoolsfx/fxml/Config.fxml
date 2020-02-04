@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import dnddockfx.*?>
+
+<DockPane fx:id="configDockPane" title="Config" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="geotoolsfx.ui.controller.ConfigController">	
+	<content>
+		<TextField textField="configLocation"/>
+		<Button onAction="setConfigLocation"/>
+		<TreeView fx:id="treeView">
+			<root>
+				<TreeItem fx:id="treeRoot" value="Config" expanded="true">
+					<children>
+						<TreeItem fx:id="dataStoresTreeItem" value="DataStores" expanded="true"/>
+						<TreeItem fx:id="featureCollectionsTreeItem" value="Feature Collections" expanded="true"/>
+						<TreeItem fx:id="mapContentsTreeItem" value="Map Contents" expanded="true"/>
+					</children>
+				</TreeItem>
+			</root>
+			<contextMenu>
+				<ContextMenu fx:id="contextMenu">
+					<items>
+						<MenuItem text="Open" onAction="#openConfig"/>
+					</items>
+				</ContextMenu>
+			</contextMenu>
+		</TreeView>
+	</content>
+</DockPane>

@@ -5,7 +5,11 @@
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="geotoolsfx.ui.controller.StylesController">	
 	<TreeView fx:id="treeView" VBox.vgrow="ALWAYS">
 		<root>
-			<TreeItem value="root" expanded="true"/>
+			<TreeItem value="Styles" expanded="true">
+				<children>
+					<TreeItem fx:id="unsavedStyles"/>
+				</children>
+			</TreeItem>
 		</root>
 		<contextMenu>
 			<ContextMenu fx:id="contextMenu">

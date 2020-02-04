@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.DefaultRepository;
-import geotoolsfx.listener.ConfigListener;
+import geotoolsfx.listener.ConfigDataStoreListener;
 import geotoolsfx.listener.DataStoresListener;
 
-public class DataStores implements ConfigListener {
+public class DataStores implements ConfigDataStoreListener {
   private DefaultRepository dataStores = new DefaultRepository();
   private List<DataStoresListener> dataStoresListeners = new ArrayList<DataStoresListener>();
   private List<Config.DataStore> configDataStores = new ArrayList<Config.DataStore>();
@@ -40,8 +41,12 @@ public class DataStores implements ConfigListener {
       for (Iterator<DataStoreFactorySpi> i = DataStoreFinder.getAvailableDataStores(); i
           .hasNext();) {
         DataStoreFactorySpi factory = (DataStoreFactorySpi) i.next();
-        factory.getParametersInfo();
         Config.DataStore configDataStore = getConfigDataStores(name);
+        
+//        for (Param param : factory.getParametersInfo()) {
+//          System.out.println(factory.getDisplayName() + " = " + param.key + " = " + param.description);
+//        }
+        
         if (configDataStore != null) {
           if (factory.canProcess((Map) configDataStore.params)) {
             try {
@@ -59,12 +64,10 @@ public class DataStores implements ConfigListener {
   }
 
   @Override
-  public void configAdded(Config config) {
-    for (Config.DataStore dataStore : config.dataStores) {
-      configDataStores.add(dataStore);
-      for (DataStoresListener dataStoresListener : dataStoresListeners) {
-        dataStoresListener.dataStoreAdded(dataStore);
-      }
+  public void configDataStoreAdded(Config.DataStore dataStore) {
+    configDataStores.add(dataStore);
+    for (DataStoresListener dataStoresListener : dataStoresListeners) {
+      dataStoresListener.dataStoreAdded(dataStore);
     }
   }
 }

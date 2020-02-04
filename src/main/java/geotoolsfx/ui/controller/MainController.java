@@ -21,6 +21,12 @@ public class MainController implements Initializable {
 
   @FXML
   private StylesController stylesController;
+  
+//  @FXML
+//  private ConfigController configController;
+  
+  @FXML
+  private ConfigsController configsController;
 
   private App app;
   
@@ -33,5 +39,12 @@ public class MainController implements Initializable {
     app.getStyles().addListener(stylesController);
     mapContentsController.setMapContents(app.getMapContents());
     featureCollectionsController.setFeatureCollections(app.getFeatureCollections());
+    
+    app.getConfigs().addConfigListener(configsController);
+    
+    configsController.setApp(app);
+//    app.getConfigs().addConfigDataStoreListener(configController);
+//    app.getConfigs().addConfigFeatureCollectionListener(configController);
+//    app.getConfigs().addConfigMapContentListener(configController);
   }
 }

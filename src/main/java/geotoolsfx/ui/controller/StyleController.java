@@ -17,8 +17,12 @@ public class StyleController implements Initializable, StylesListener {
 
   }
 
-  public void setStyle(Style style) {}
+  public void setStyle(Style style) {
+    
+  }
 
   @Override
-  public void styleAdded(Style layer) {}
+  public void styleAdded(Style style) {
+    
+  }
 }

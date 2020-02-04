@@ -6,24 +6,27 @@
 	<dockPanes>
 		<DockPane fx:id="catalogDockPane" title="Catalog">
 			<content>
-				<fx:include VBox.vgrow="ALWAYS" fx:id="catalog" source="Catalog.fxml"/>
+				<fx:include fx:id="catalog" source="Catalog.fxml"/>
 			</content>
 		</DockPane>
 		
-		<fx:include VBox.vgrow="ALWAYS" fx:id="featureCollections" source="FeatureCollections.fxml"/>
+		<fx:include fx:id="featureCollections" source="FeatureCollections.fxml"/>
 		
-		<fx:include VBox.vgrow="ALWAYS" fx:id="mapContents" source="MapContents.fxml"/>
+		<fx:include fx:id="mapContents" source="MapContents.fxml"/>
 		
 		<DockPane fx:id="layersDockPane" title="Layers">
 			<content>
-				<fx:include VBox.vgrow="ALWAYS" fx:id="layers" source="Layers.fxml"/>
+				<fx:include fx:id="layers" source="Layers.fxml"/>
 			</content>
 		</DockPane>
 		
 		<DockPane fx:id="stylesDockPane" title="Styles">
 			<content>
-				<fx:include VBox.vgrow="ALWAYS" fx:id="styles" source="Styles.fxml"/>
+				<fx:include fx:id="styles" source="Styles.fxml"/>
 			</content>
 		</DockPane>
+		
+		<fx:include fx:id="configs" source="Configs.fxml"/>
+		<!--<fx:include fx:id="config" source="Config.fxml"/>-->
 	</dockPanes>
 </DockPane>

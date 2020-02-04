@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import dnddockfx.*?>
+
+<DockPane fx:id="configEditDockNode" title="Config Editor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="geotoolsfx.ui.controller.ConfigEditController">	
+	<content>
+		<VBox>
+			<ScrollPane>
+				<VBox fx:id="configContainer">
+				</VBox>
+			</ScrollPane>
+			<Button text="Save" onAction="#saveConfig"/>
+		</VBox>
+	</content>
+</DockPane>

@@ -22,9 +22,8 @@ public class Main extends Application {
     MainController mainController = fxmlLoader.getController();
     
     App app = new App();
-    app.addConfig("resources/config/geotoolsfx.xml");
     mainController.setApp(app);
-    app.getConfigs().notifyAllConfigsAdded();
+    app.getConfigs().addConfig("resources/config/geotoolsfx.xml");
     
     DockManager dockManager = new DockManager();
     dockManager.addDockPane(dockPane);

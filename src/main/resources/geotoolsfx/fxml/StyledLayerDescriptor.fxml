@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="geotoolsfx.ui.controller.StyledLayerDescriptorController">
+	<GridPane>
+		<Label text="SLD File"/>
+		<TextField fx:id="sldFile" GridPane.columnIndex="1"/>
+	</GridPane>
+	
+	<Label text="Styles"/>
+	<ListView fx:id="listView" VBox.vgrow="ALWAYS">
+		<contextMenu>
+			<ContextMenu fx:id="contextMenu">
+				<items>
+					<MenuItem text="Open" onAction="#openStyle"/>
+				</items>
+			</ContextMenu>
+		</contextMenu>
+	</ListView>
+</VBox>

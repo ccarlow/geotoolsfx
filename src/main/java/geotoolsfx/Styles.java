@@ -8,12 +8,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactory;
 import org.geotools.xml.styling.SLDParser;
-import geotoolsfx.listener.ConfigListener;
 import geotoolsfx.listener.StylesListener;
 
 public class Styles {

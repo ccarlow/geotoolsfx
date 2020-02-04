@@ -7,7 +7,7 @@
 	<content>
 		<TreeView fx:id="treeView" VBox.vgrow="ALWAYS">
 			<root>
-				<TreeItem value="root" expanded="true"/>
+				<TreeItem value="Map Contents" expanded="true"/>
 			</root>
 			<contextMenu>
 				<ContextMenu fx:id="contextMenu">

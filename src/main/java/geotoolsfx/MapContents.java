@@ -8,16 +8,18 @@ import org.geotools.map.FeatureLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
 import org.geotools.styling.Style;
-import geotoolsfx.listener.ConfigListener;
+import geotoolsfx.listener.ConfigMapContentListener;
 import geotoolsfx.listener.MapContentsListener;
 
-public class MapContents implements ConfigListener {
+public class MapContents implements ConfigMapContentListener {
   private List<MapContent> mapContents = new ArrayList<MapContent>();
   private Styles styles;
   private FeatureCollections featureCollections;
   private List<MapContentsListener> mapContentsListeners = new ArrayList<MapContentsListener>();
   private Set<MapContent> selected = new HashSet<MapContent>();
 
+  public static final String CONFIG_USER_DATA = "mapContentConfig";
+  
   public MapContent getByTitle(String title) {
     for (MapContent mapContent : mapContents) {
       if (mapContent.getTitle().equals(title)) {
@@ -54,38 +56,37 @@ public class MapContents implements ConfigListener {
     } else {
       selected.remove(mapContent);
     }
-    fireMapContentSelected(mapContent);
+    notifyMapContentSelected(mapContent);
   }
 
   public boolean isSelected(MapContent mapContent) {
     return selected.contains(mapContent);
   }
 
-  protected void fireMapContentSelected(MapContent mapContent) {
+  protected void notifyMapContentSelected(MapContent mapContent) {
     for (MapContentsListener listener : mapContentsListeners) {
       listener.mapContentChanged(mapContent);
     }
   }
 
   @Override
-  public void configAdded(Config config) {
-    for (Config.MapContent configMapContent : config.mapContents) {
-      MapContent mapContent = new MapContent();
-      mapContent.setTitle(configMapContent.getTitle());
-      mapContents.add(mapContent);
+  public void configMapContentAdded(Config.MapContent configMapContent) {
+    MapContent mapContent = new MapContent();
+    mapContent.setTitle(configMapContent.getTitle());
+    mapContents.add(mapContent);
+    mapContent.getUserData().put(CONFIG_USER_DATA, configMapContent);
 
-      for (Config.Layer configLayer : configMapContent.layers) {
-        Style style = styles.getByConfigLayer(configLayer);
-        FeatureCollectionWrapper featureCollection =
-            featureCollections.getByTitle(configLayer.featureCollection);
-        Layer layer = new FeatureLayer(featureCollection.getFeatures(), style);
-        layer.setTitle(configLayer.getTitle());
-        mapContent.addLayer(layer);
-      }
+    for (Config.Layer configLayer : configMapContent.layers) {
+      Style style = styles.getByConfigLayer(configLayer);
+      FeatureCollectionWrapper featureCollection =
+          featureCollections.getByTitle(configLayer.featureCollection);
+      Layer layer = new FeatureLayer(featureCollection.getFeatures(), style);
+      layer.setTitle(configLayer.getTitle());
+      mapContent.addLayer(layer);
+    }
 
-      for (MapContentsListener mapContentsListener : mapContentsListeners) {
-        mapContentsListener.mapContentAdded(mapContent);
-      }
+    for (MapContentsListener mapContentsListener : mapContentsListeners) {
+      mapContentsListener.mapContentAdded(mapContent);
     }
   }
 }

@@ -100,6 +100,8 @@ public class FiltersFactory {
           Filter existingFilter = filters.getFilter(factoryName, alias);
           if (existingFilter != null) {
             filters.setFilter(factoryName, alias, ff.or(existingFilter, filter));
+          } else {
+            filters.setFilter(factoryName, alias, filter);
           }
         }
       }
